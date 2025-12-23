@@ -7,7 +7,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeo
 # ===============================
 # DB 설정
 # ===============================
-DB_DIR = "/home/ys/다운로드/DB"
+DB_DIR = "/home/ys/shop/DB"
 DB_PATH = os.path.join(DB_DIR, "y1.db")
 COOKIE_FILE = "do_cookies.json"
 

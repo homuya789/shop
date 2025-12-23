@@ -18,7 +18,7 @@ def is_resell_allowed(answer_text: str) -> str:
 # ✅ y2 테이블 생성
 def setup_db():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    DB_DIR = "/home/ys/다운로드/DB"
+    DB_DIR = "/home/ys/shop/DB"
     DB_PATH = os.path.join(DB_DIR, "y1.db")
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()

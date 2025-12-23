@@ -9,14 +9,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
 # === 이미지 폴더 경로 지정 ===
-P1_DIR = "/home/ys/다운로드/p1"  # 메인 이미지 폴더
-P2_DIR = "/home/ys/다운로드/p2"  # 설명 이미지 폴더
+P1_DIR = "/home/ys/shop/p1"  # 메인 이미지 폴더
+P2_DIR = "/home/ys/shop/p2"  # 설명 이미지 폴더
 
 def run():
     # === DB에서 상품 정보 읽기 ===
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    DB_DIR = "/home/ys/다운로드/DB"
+    DB_DIR = "/home/ys/shop/DB"
     DB_PATH = os.path.join(DB_DIR, "y1.db")
     conn = sqlite3.connect(DB_PATH)
     cursor.execute("""
