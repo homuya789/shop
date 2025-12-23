@@ -137,8 +137,7 @@ def login_and_write_inquiry(product_number):
         return False
 
     finally:
-        if browser:
-            browser.close()
+        pass
 
 
 # ===============================
