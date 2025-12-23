@@ -115,7 +115,7 @@ def process_current_page(page, page_num, conn):
             current_item.click()
             
         else:
-        print(f"⚪ 답변대기 항목 (#{item_data['index']+1})")
+            print(f"⚪ 답변대기 항목 (#{item_data['index']+1})")
 
 
             try:
