@@ -117,13 +117,17 @@ def login_and_write_inquiry(product_number):
             # confirm / alert 자동 승인
             page.on("dialog", lambda dialog: dialog.accept())
 
-            # submit 클릭
+            # submit 클릭(등록)
             frame.click("input[type='submit']")
 
 
             time.sleep(1)
             return True
 
+            # 등록 후 잠시 대기
+            time.sleep(5)
+            browser.close()
+'''
     except KeyboardInterrupt:
         print("⛔ 사용자 중단 (Ctrl+C)")
         raise  # runner까지 같이 종료
@@ -139,7 +143,7 @@ def login_and_write_inquiry(product_number):
     finally:
         if browser:
             browser.close()
-
+'''
 
 # ===============================
 # run()
