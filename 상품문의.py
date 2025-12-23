@@ -33,23 +33,20 @@ def delete_from_y(number):
     print(f"🧹 y에서 삭제 완료: {number}")
 
 # ✅ 세션 쿠키 저장/불러오기
-def save_session_cookies(driver):
-    cookies = driver.get_cookies()
+def save_session_cookies(context):
+    cookies = context.cookies()
     with open("do_cookies.json", "w", encoding="utf-8") as f:
         json.dump(cookies, f, ensure_ascii=False, indent=2)
     print("✅ 세션 쿠키 저장 완료")
 
-def load_session_cookies(driver):
+def load_session_cookies(context):
     try:
         with open("do_cookies.json", "r", encoding="utf-8") as f:
             cookies = json.load(f)
-        for cookie in cookies:
-            if 'sameSite' in cookie:
-                cookie.pop('sameSite')
-            driver.add_cookie(cookie)
+        context.add_cookies(cookies)
         print("✅ 세션 쿠키 로드 완료")
     except FileNotFoundError:
-        print("⚠️ 세션 쿠키 파일이 없어 로그인 필요")
+        print("⚠️  세션 쿠키 파일이 없어 로그인 필요")
 
 
 # ===============================
