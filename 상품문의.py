@@ -78,15 +78,20 @@ def login_and_write_inquiry(product_number):
             page.click("a[href='#lTapSupport']")
             time.sleep(1)
 
-            # iframe 재획득
-            frame = get_support_frame(page)
+            # ✅ supportIframe 대기
+            page.wait_for_selector("#supportIframe", timeout=15000)
+            iframe_element = page.query_selector("#supportIframe")
+            frame = iframe_element.content_frame()
+            print("✅ supportIframe 로드됨")
 
             # 문의글 작성 버튼
             frame.click("input[value='문의글 작성']")
             time.sleep(0.5)
 
-            # 다시 iframe (페이지 내부 갱신 대비)
-            frame = get_support_frame(page)
+            # ✅ 문의 작성 프레임 재선택
+            page.wait_for_selector("iframe[name='supportIframe']", timeout=10000)
+            iframe_element = page.query_selector("iframe[name='supportIframe']")
+            frame = iframe_element.content_frame()
 
             # 체크박스 (있는 것만)
             checkbox_ids = [
