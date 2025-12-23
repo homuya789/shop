@@ -111,8 +111,6 @@ def process_current_page(page, page_num, conn):
             found = True
             print(f"\n🟢 답변완료 항목 발견 (#{item_data['index']+1})")
             #-------------------------------------------------------
-            # 최신 DOM에서 요소 다시 가져와 클릭
-            current_item.click()
             
         else:
             print(f"⚪ 답변대기 항목 (#{item_data['index']+1})")
