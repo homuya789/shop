@@ -112,14 +112,14 @@ def process_current_page(page, page_num, conn):
             print(f"\n🟢 답변완료 항목 발견 (#{item_data['index']+1})")
 
             # 최신 DOM에서 요소 다시 가져와 클릭
-            current_item = page.query_selector_all("li.lSupportList")[item_data["index"]]
             current_item.click()
 
             try:
-                page.wait_for_selector("li.lSupportList .lSupportAnswer", timeout=5000)
-                answer_area = current_item.query_selector(".lSupportAnswer")
+                page.wait_for_selector(".lSupportAnswer", timeout=5000)
+                answer_area = page.query_selector(".lSupportAnswer")
             except:
                 answer_area = None
+
 
             if answer_area:
                 answer_text = answer_area.inner_text()
