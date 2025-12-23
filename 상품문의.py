@@ -114,10 +114,12 @@ def login_and_write_inquiry(product_number):
                 "안녕하세요 판매자님! 리셀 가능한지 문의드립니다!"
             )
 
-            # submit + confirm (페이지 컨텍스트 파괴 대비)
-            with page.expect_dialog() as dialog_info:
-                frame.click("input[type='submit']")
-            dialog_info.value.accept()
+            # confirm / alert 자동 승인
+            page.on("dialog", lambda dialog: dialog.accept())
+
+            # submit 클릭
+            frame.click("input[type='submit']")
+
 
             time.sleep(1)
             return True
