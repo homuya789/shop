@@ -110,10 +110,9 @@ def process_current_page(page, page_num, conn):
         if "답변완료" in item_data["status"]:  
             found = True
             print(f"\n🟢 답변완료 항목 발견 (#{item_data['index']+1})")
-            #-------------------------------------------------------
+            continue
             
-        else:
-            print(f"⚪ 답변대기 항목 (#{item_data['index']+1})")
+        print(f"⚪ 답변대기 항목 (#{item_data['index']+1})")
 
 
         try:
@@ -121,7 +120,6 @@ def process_current_page(page, page_num, conn):
             answer_area = page.query_selector(".lSupportAnswer")
         except:
             answer_area = None
-
 
         if answer_area:
             answer_text = answer_area.inner_text()
@@ -138,7 +136,7 @@ def process_current_page(page, page_num, conn):
                 else:
                     print("❌ 상품 번호 추출 실패")
         else:
-            print("❌ 답변 내용 로딩 실패 (타임아웃)")
+            print("❌ 답변 대기(타임아웃)")
 
     return found
 
