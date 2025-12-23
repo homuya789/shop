@@ -32,23 +32,24 @@ def delete_from_y(number):
     conn.close()
     print(f"🧹 y에서 삭제 완료: {number}")
 
-
-# ===============================
 # ✅ 세션 쿠키 저장/불러오기
-def save_session_cookies(context):
-    cookies = context.cookies()
+def save_session_cookies(driver):
+    cookies = driver.get_cookies()
     with open("do_cookies.json", "w", encoding="utf-8") as f:
         json.dump(cookies, f, ensure_ascii=False, indent=2)
     print("✅ 세션 쿠키 저장 완료")
 
-def load_session_cookies(context):
+def load_session_cookies(driver):
     try:
         with open("do_cookies.json", "r", encoding="utf-8") as f:
             cookies = json.load(f)
-        context.add_cookies(cookies)
+        for cookie in cookies:
+            if 'sameSite' in cookie:
+                cookie.pop('sameSite')
+            driver.add_cookie(cookie)
         print("✅ 세션 쿠키 로드 완료")
     except FileNotFoundError:
-        print("⚠️  세션 쿠키 파일이 없어 로그인 필요")
+        print("⚠️ 세션 쿠키 파일이 없어 로그인 필요")
 
 
 # ===============================
@@ -63,6 +64,7 @@ def login_and_write_inquiry(product_number):
         with sync_playwright() as p:
             browser = p.firefox.launch(headless=False)
             context = browser.new_context()
+            load_session_cookies(context)
             page = context.new_page()
 
             # 1️⃣ 도메인 접속
