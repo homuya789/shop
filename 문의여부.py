@@ -145,7 +145,7 @@ for item_data in items_data:
             print("❌ 상품 번호 추출 실패")
 
 
-    return found
+return found
 
 
 
