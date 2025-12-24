@@ -112,7 +112,7 @@ def process_current_page(page, page_num, conn):
             print(f"\n🟢 답변완료 항목 발견 (#{item_data['index']+1})")
 
             try:
-                page.wait_for_selector(".lSupportAnswer", timeout=5000)
+                page.wait_for_selector("li.lSupportList .lSupportAnswer", timeout=5000)
                 answer_area = page.query_selector(".lSupportAnswer")
             except:
                 answer_area = None
