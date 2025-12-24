@@ -110,31 +110,32 @@ def process_current_page(page, page_num, conn):
         if "답변완료" in item_data["status"]:  
             found = True
             print(f"\n🟢 답변완료 항목 발견 (#{item_data['index']+1})")
+
+            try:
+                page.wait_for_selector(".lSupportAnswer", timeout=5000)
+                answer_area = page.query_selector(".lSupportAnswer")
+            except:
+                answer_area = None
+
+            if answer_area:
+                answer_text = answer_area.inner_text()
+                print(f"🔍 답변 내용:\n{answer_text}")
+
+                result = is_resell_allowed(answer_text)
+                print(f"🧠 판별 결과: {result}")
+
+                if result.upper() in ["YES", "NO"]:
+                    match = re.search(r'domeggook\.com/(\d+)', item_data["href"])
+                    if match:
+                        product_number = match.group(1)
+                        insert_product(conn, product_number, result)
+                    else:
+                        print("❌ 상품 번호 추출 실패")
+            else:
+                print("❌ 답변 대기(타임아웃)")
+            
         else:
-            print(f"⚪ 답변대기 항목 (#{item_data['index']+1})")
-
-        try:
-            page.wait_for_selector(".lSupportAnswer", timeout=5000)
-            answer_area = page.query_selector(".lSupportAnswer")
-        except:
-            answer_area = None
-
-        if answer_area:
-            answer_text = answer_area.inner_text()
-            print(f"🔍 답변 내용:\n{answer_text}")
-
-            result = is_resell_allowed(answer_text)
-            print(f"🧠 판별 결과: {result}")
-
-            if result.upper() in ["YES", "NO"]:
-                match = re.search(r'domeggook\.com/(\d+)', item_data["href"])
-                if match:
-                    product_number = match.group(1)
-                    insert_product(conn, product_number, result)
-                else:
-                    print("❌ 상품 번호 추출 실패")
-        else:
-            print("❌ 답변 대기(타임아웃)")
+            print("⚪ 답변대기 항목")
 
     return found
 
