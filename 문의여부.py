@@ -115,8 +115,8 @@ def process_current_page(page, page_num, conn):
             current_item.click()
 
             try:
-                page.wait_for_selector(".lSupportAnswer", timeout=5000)
-                answer_area = page.query_selector(".lSupportAnswer")
+                page.wait_for_selector("li.lSupportList .lSupportAnswer", timeout=5000)
+                answer_area = current_item.query_selector(".lSupportAnswer")
             except:
                 answer_area = None
 
