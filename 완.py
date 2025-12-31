@@ -11,13 +11,12 @@ import sqlite3, time, re
 
 BASE = "https://domeggook.com"
 
-
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_DIR = "/home/ys/shop/DB"
+DB_PATH = os.path.join(DB_DIR, "y1.db")
 
 # ---------- DB ----------
 def setup_db():
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    DB_DIR = "/home/ys/shop/DB"
-    DB_PATH = os.path.join(DB_DIR, "y1.db")
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     cur.execute("""
