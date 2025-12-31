@@ -19,6 +19,7 @@ def run():
     DB_DIR = "/home/ys/shop/DB"
     DB_PATH = os.path.join(DB_DIR, "y1.db")
     conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
     cursor.execute("""
         SELECT number, title, price, min_qty, delivery_info, options
         FROM y3
