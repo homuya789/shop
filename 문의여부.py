@@ -106,48 +106,44 @@ def process_current_page(page, page_num, conn):
         })
 
     found = False
-
     for item_data in items_data:
+        if "답변완료" in item_data["status"]:  
+            found = True
+            print(f"\n🟢 답변완료 항목 발견 (#{item_data['index']+1})")
 
-        if "답변완료" not in item_data["status"]:
-            print("⚪ 답변대기 항목")
-            continue
+            current_item = page.query_selector_all("li.lSupportList")[item_data["index"]]
+            current_item.click()#문의글 클릭
 
-        found = True
-        print(f"\n🟢 답변완료 항목 발견 (#{item_data['index']+1})")
 
-        current_item = page.query_selector_all("li.lSupportList")[item_data["index"]]
-        current_item.click()  # 문의글 클릭
+            page.wait_for_selector(".lSupportDetailWrap:visible", timeout=5000)
+            detail_wrap = page.query_selector(".lSupportDetailWrap:visible")
 
-        # ✅ DOM 잡는 부분만 try/except
-        try:
-            page.wait_for_selector(".lSupportDetailWrap", timeout=5000)
-            detail_wrap = page.query_selector(".lSupportDetailWrap")
             answer_area = detail_wrap.query_selector(".lSupportBmemo")
-        except:
-            answer_area = None
+            answer_text = answer_area.inner_text()
 
-        # ✅ 처리 로직은 try/except 밖
-        if not answer_area:
-            print("❌ 답변 대기(타임아웃)")
-            continue
 
-        answer_text = answer_area.inner_text()
-        print(f"🔍 답변 내용:\n{answer_text}")
 
-        result = is_resell_allowed(answer_text)
-        print(f"🧠 판별 결과: {result}")
+            if answer_area:
+                answer_text = answer_area.inner_text()
+                print(f"🔍 답변 내용:\n{answer_text}")
 
-        if result.upper() in ["YES", "NO"]:
-            match = re.search(r'domeggook\.com/(\d+)', item_data["href"])
-            if match:
-                product_number = match.group(1)
-                insert_product(conn, product_number, result)
+                result = is_resell_allowed(answer_text)
+                print(f"🧠 판별 결과: {result}")
+
+                if result.upper() in ["YES", "NO"]:
+                    match = re.search(r'domeggook\.com/(\d+)', item_data["href"])
+                    if match:
+                        product_number = match.group(1)
+                        insert_product(conn, product_number, result)
+                    else:
+                        print("❌ 상품 번호 추출 실패")
             else:
-                print("❌ 상품 번호 추출 실패")
+                print("❌ 답변 대기(타임아웃)")
+            
+        else:
+            print("⚪ 답변대기 항목")
 
     return found
-
 
 
 
