@@ -113,13 +113,7 @@ def process_current_page(page, page_num, conn):
 
             current_item = page.query_selector_all("li.lSupportList")[item_data["index"]]
             current_item.click()#문의글 클릭
-            '''
-            try:
-                page.wait_for_selector(".lSupportDetailWrap", timeout=5000)
-                answer_area = page.query_selector(".lSupportDetailWrap")
-            except:
-                answer_area = None
-            '''
+
             if answer_area:
                 answer_text = answer_area.inner_text()
                 print(f"🔍 답변 내용:\n{answer_text}")
