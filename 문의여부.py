@@ -80,7 +80,7 @@ def get_total_pages(page):
         print(f"❌ 페이지 수 파싱 실패: {e}")
     return 1
 
-# ✅ 한 페이지 처리
+# ✅ 한 페이지 처리(문의란 있는지 확인)
 def process_current_page(page, page_num, conn):
     try:
         page.wait_for_selector("li.lSupportList", timeout=10000)
@@ -99,10 +99,10 @@ def process_current_page(page, page_num, conn):
         a_tag = el.query_selector("a")
         href = a_tag.get_attribute("href") if a_tag else ""
         items_data.append({
-            "status": status,
-            "question": question,
-            "href": href,
-            "index": idx
+            "status": status,      #답변상태
+            "question": question,  #내질문글
+            "href": href,          #상품명
+            "index": idx           #
         })
 
     found = False
@@ -112,14 +112,14 @@ def process_current_page(page, page_num, conn):
             print(f"\n🟢 답변완료 항목 발견 (#{item_data['index']+1})")
 
             current_item = page.query_selector_all("li.lSupportList")[item_data["index"]]
-            current_item.click()
-
+            current_item.click()#문의글 클릭
+            '''
             try:
-                page.wait_for_selector(".lSupportAnswer", timeout=5000)
-                answer_area = page.query_selector(".lSupportAnswer")
+                page.wait_for_selector(".lSupportDetailWrap", timeout=5000)
+                answer_area = page.query_selector(".lSupportDetailWrap")
             except:
                 answer_area = None
-
+            '''
             if answer_area:
                 answer_text = answer_area.inner_text()
                 print(f"🔍 답변 내용:\n{answer_text}")
