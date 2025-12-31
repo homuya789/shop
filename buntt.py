@@ -69,7 +69,7 @@ def run():
     print("시작합니다.")
     # ✅ 로그인 여부 확인 (내상점 버튼이 있으면 로그인 상태)
     try:
-        my_shop = wait.until(EC.presence_of_element_located((By.LINK_TEXT, "로그인/회원가입")))
+        my_shop = wait.until(EC.presence_of_element_located((By.LINK_TEXT, "로그인")))
         print("❌ 로그인 필요")
         input("🔑 로그인 완료 후 엔터")
     except:
