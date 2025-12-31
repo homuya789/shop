@@ -1,8 +1,8 @@
-import d_login
+#import d_login
 #import 제외번호
 #import 상품번호
 #import 상품문의
-import 문의여부
+#import 문의여부
 import 완
 import buntt
 
@@ -22,11 +22,11 @@ def safe_run(name, func):
 print("===== 전체 실행 시작 =====")
 
 steps = [
-    ("d_login", d_login.run),
+#    ("d_login", d_login.run),
 #    ("제외번호", 제외번호.run),
 #    ("상품번호", 상품번호.run),
 #    ("상품문의", 상품문의.run),
-    ("문의여부", 문의여부.run),
+#    ("문의여부", 문의여부.run),
     ("완", 완.run),
     ("buntt", buntt.run),
 ]

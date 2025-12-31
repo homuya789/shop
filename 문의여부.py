@@ -114,7 +114,7 @@ def process_current_page(page, page_num, conn):
             current_item = page.query_selector_all("li.lSupportList")[item_data["index"]]
             current_item.click()#문의글 클릭
 
-
+            #*visible*(지금 화면에 실제로 보이는 DOM 요소만 골라라)
             page.wait_for_selector(".lSupportDetailWrap:visible", timeout=5000)
             detail_wrap = page.query_selector(".lSupportDetailWrap:visible")
 
