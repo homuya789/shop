@@ -135,7 +135,7 @@ def run():
                 desc_elem_main = wait.until(EC.presence_of_element_located((By.ID, "lThumbImg")))
                 soup_main = BeautifulSoup(desc_elem_main.get_attribute("outerHTML"), "html.parser")
                 img_tags_main = soup_main.find_all("img")
-                img_urls_main = [tag.get("src") for tag in img_tags_main if tag.get("src")]
+                img_urls_main = [tag.get("src").strip() for tag in img_tags_main if tag.get("src")]
 
                 from bs4 import Comment
                 sep_images_main = []
@@ -143,7 +143,7 @@ def run():
                     if "SEP" in comment:
                         next_elem = comment.find_next("img")
                         if next_elem:
-                            sep_images_main.append(next_elem.get("src"))
+                            sep_images_main.append(next_elem.get("src").strip())
 
                 all_images_main = list(set(img_urls_main + sep_images_main))
 
@@ -165,14 +165,14 @@ def run():
                 desc_elem_desc = wait.until(EC.presence_of_element_located((By.ID, "lInfoViewItemContents")))
                 soup_desc = BeautifulSoup(desc_elem_desc.get_attribute("outerHTML"), "html.parser")
                 img_tags_desc = soup_desc.find_all("img")
-                img_urls_desc = [tag.get("src") for tag in img_tags_desc if tag.get("src")]
+                img_urls_desc = [tag.get("src").strip() for tag in img_tags_desc if tag.get("src")]
 
                 sep_images_desc = []
                 for comment in soup_desc.find_all(string=lambda text: isinstance(text, Comment)):
                     if "SEP" in comment:
                         next_elem = comment.find_next("img")
                         if next_elem:
-                            sep_images_desc.append(next_elem.get("src"))
+                            sep_images_desc.append(next_elem.get("src").strip())
 
                 all_images_desc = list(set(img_urls_desc + sep_images_desc))
 
